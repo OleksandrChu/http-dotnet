@@ -36,7 +36,7 @@ namespace web33
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("InCamp-Student", "Alex");
-                context.Response.ContentType = "text/html; charset=utf8";
+                context.Response.ContentType = "text/html; charset=UTF-8";
                 await next.Invoke();
             });
 
@@ -51,11 +51,10 @@ namespace web33
                     Response response = new Response();
                     try
                     {
-                        foreach (var tag in DataStorage.tags)
-                        {
-                            await response.ParseHttpResponseAsync(await new HttpClient().GetAsync(DataStorage.urls.GetRandomElement() + tag));
-                        }
-                        await context.Response.WriteAsync($"{response.GetQuote()}\n{response.GetInfo()}");
+                        DateTime start = DateTime.Now;
+                        var requests = DataStorage.tags.Select(tag => DoWorkAsync(response, tag));
+                        await Task.WhenAll(requests);
+                        await context.Response.WriteAsync($"{DateTime.Now - start}\n{response.GetQuote()}\n{response.GetInfo()}");
                     }
                     catch (HttpRequestException e)
                     {
@@ -84,6 +83,10 @@ namespace web33
                     await context.Response.WriteAsync(new Quote().GenerateQuote());
                 });
             });
+
+            async Task DoWorkAsync(Response response, string tag) {
+                await response.ParseHttpResponseAsync(await new HttpClient().GetAsync(DataStorage.urls.GetRandomElement() + tag));
+            }
         }
     }
 }
