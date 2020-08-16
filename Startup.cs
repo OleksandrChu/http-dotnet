@@ -48,11 +48,18 @@ namespace web33
                 endpoints.MapGet("/incamp", async context =>
                 {
                     Response response = new Response();
-                    foreach (var tag in DataStorage.tags)
+                    try
                     {
-                        await response.ParseHttpResponseAsync(await new HttpClient().GetAsync(DataStorage.urls.GetRandomElement() + tag));
+                        foreach (var tag in DataStorage.tags)
+                        {
+                            await response.ParseHttpResponseAsync(await new HttpClient().GetAsync(DataStorage.urls.GetRandomElement() + tag));
+                        }
+                        await context.Response.WriteAsync($"{response.GetQuote()}\n{response.GetInfo()}");
                     }
-                    await context.Response.WriteAsync($"{response.GetQuote()}\n{response.GetInfo()}");
+                    catch (HttpRequestException e)
+                    {
+                       await context.Response.WriteAsync(e.Message);
+                    }
                 });
                 endpoints.MapGet("/who", async context =>
                 {
