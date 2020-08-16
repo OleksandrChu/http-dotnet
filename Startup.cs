@@ -36,6 +36,7 @@ namespace web33
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("InCamp-Student", "Alex");
+                context.Response.ContentType = "text/html; charset=utf8";
                 await next.Invoke();
             });
 
