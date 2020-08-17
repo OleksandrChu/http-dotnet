@@ -18,12 +18,12 @@ namespace web3
             info += $"{httpResponseMessage.Headers.GetValues("InCamp-Student").First()} send: {stream} \n";
         }
 
-        internal object GetQuote()
+        public string GetQuote()
         {
             return quote;
         }
 
-        internal object GetInfo()
+        public string GetInfo()
         {
             return info;
         }
