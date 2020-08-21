@@ -1,5 +1,6 @@
 using System.Net.Http;
 using Storage;
+using System;
 using Extentions;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace web3
             response = new Response();
             foreach (var page in DataStorage.tags)
             {
+                Console.WriteLine($"URL = {DataStorage.urls.GetRandomElement() + page}")   ;
                 await response.ParseHttpResponseAsync(await new HttpClient().GetAsync(DataStorage.urls.GetRandomElement() + page));
             }
             return response;

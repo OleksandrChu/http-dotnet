@@ -35,8 +35,8 @@ namespace web33
 
             app.Use(async (context, next) =>
             {
-                context.Response.Headers.Add("InCamp-Student", "Alex");
-                //context.Response.ContentType = "text/html; charset=UTF-8";
+                context.Response.Headers.Add("hostname", context.Request.Host.Value);
+                context.Response.ContentType = "text/html; charset=UTF-8";
                 await next.Invoke();
             });
 
@@ -44,13 +44,13 @@ namespace web33
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync("Hello Worl111d!");
                 });
                 endpoints.MapGet("/incamp18-quote", async context =>
                 {
                     Response response = new Response();
-                    // var requestService = new RequestService(new SyncRequest(), context);
-                    var requestService = new RequestService(new ParallelRequest(), context);
+                    var requestService = new RequestService(new SyncRequest(), context);
+                    // var requestService = new RequestService(new ParallelRequest(), context);
                     try
                     {
                         await requestService.PerformRequestAsync();

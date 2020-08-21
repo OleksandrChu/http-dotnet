@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  http-dotnet:
+    image: demo-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "3000:80"
+
+  http-dotnet2:
+    image: demo-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "3001:80"
+
+  http-dotnet3:
+    image: demo-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "3002:80"
+
+

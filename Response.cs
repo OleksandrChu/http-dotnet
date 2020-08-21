@@ -15,7 +15,7 @@ namespace web3
         {
             stream = await httpResponseMessage.Content.ReadAsStringAsync() + " ";
             quote += stream;
-            info += $"{httpResponseMessage.Headers.GetValues("InCamp-Student").First()} send: {stream} \n";
+            info += $"{httpResponseMessage.Headers.GetValues("hostname").First()} send: {stream}\n";
         }
 
         public string GetQuote()
