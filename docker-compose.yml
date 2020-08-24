@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 
 services:
   http-dotnet:
@@ -8,6 +8,10 @@ services:
       dockerfile: Dockerfile
     ports: 
       - "3000:80"
+    deploy:
+      resources:
+        limits:
+          memory: 50m
 
   http-dotnet2:
     image: demo-api
@@ -16,6 +20,10 @@ services:
       dockerfile: Dockerfile
     ports: 
       - "3001:80"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
 
   http-dotnet3:
     image: demo-api
@@ -24,5 +32,35 @@ services:
       dockerfile: Dockerfile
     ports: 
       - "3002:80"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+
+  http-dotnet4:
+    image: demo-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "3003:80"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+
+  http-dotnet5:
+    image: demo-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "3004:80"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+        
+
 
 

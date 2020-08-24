@@ -57,7 +57,7 @@ namespace web33
                     }
                     catch (HttpRequestException e)
                     {
-                       await context.Response.WriteAsync(e.Message);
+                        await context.Response.WriteAsync(e.Message);
                     }
                 });
                 endpoints.MapGet("/who", async context =>
