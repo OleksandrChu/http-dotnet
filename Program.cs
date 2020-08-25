@@ -23,6 +23,11 @@ namespace web33
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureAppConfiguration((hostingName, config) =>
+                {
+                    config.AddCommandLine(args);
+                    config.AddEnvironmentVariables();
                 });
     }
 }

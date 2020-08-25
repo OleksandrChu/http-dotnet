@@ -8,6 +8,7 @@ using Extentions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Storage;
@@ -17,12 +18,20 @@ namespace web33
 {
     public class Startup
     {
+        private readonly IConfiguration _iconfiguration;
+
+        public Startup(IConfiguration iconfiguration)
+        {
+            _iconfiguration = iconfiguration;
+            System.Console.WriteLine("ASYNC" + _iconfiguration.GetValue<string>("mode"));
+            System.Console.WriteLine("ASYNC2222" + _iconfiguration.GetValue<string>("EmailServer"));
+        }
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var environmentName = Environment.GetEnvironmentVariable("EmailServer");
-                    Console.WriteLine("env name: " + environmentName);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
