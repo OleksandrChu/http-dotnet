@@ -3,20 +3,19 @@ using Storage;
 using System;
 using Extentions;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace web3
 {
     public class SyncRequest : IHttpRequest
     {
-        private Response response;
 
-        async Task<Response> IHttpRequest.Perform()
+        public async Task<Response> Perform(IEnumerable<Task<HttpResponseMessage>> requests)
         {
-            response = new Response();
-            foreach (var page in DataStorage.tags)
+            var response = new Response();
+            foreach (var task in requests)
             {
-                Console.WriteLine($"URL = {DataStorage.urls.GetRandomElement() + page}")   ;
-                await response.ParseHttpResponseAsync(await new HttpClient().GetAsync(DataStorage.urls.GetRandomElement() + page));
+                await response.ParseHttpResponseAsync((await task));
             }
             return response;
         }

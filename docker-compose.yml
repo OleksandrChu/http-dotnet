@@ -1,65 +1,19 @@
-version: '3.8'
+version: '3.7'
 
 services:
   http-dotnet:
-    image: demo-api
     build:
-      context: .
+      context: ./
       dockerfile: Dockerfile
-    ports: 
-      - "3000:80"
+    environment: 
+      - EmailServer=172.2.0.18
+    ports:
+      - target: 80
     deploy:
+      replicas: 3
       resources:
         limits:
           memory: 50m
-
-  http-dotnet2:
-    image: demo-api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports: 
-      - "3001:80"
-    deploy:
-      resources:
-        limits:
-          memory: 50M
-
-  http-dotnet3:
-    image: demo-api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports: 
-      - "3002:80"
-    deploy:
-      resources:
-        limits:
-          memory: 50M
-
-  http-dotnet4:
-    image: demo-api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports: 
-      - "3003:80"
-    deploy:
-      resources:
-        limits:
-          memory: 50M
-
-  http-dotnet5:
-    image: demo-api
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports: 
-      - "3004:80"
-    deploy:
-      resources:
-        limits:
-          memory: 50M
         
 
 

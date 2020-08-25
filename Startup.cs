@@ -21,6 +21,8 @@ namespace web33
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var environmentName = Environment.GetEnvironmentVariable("EmailServer");
+                    Console.WriteLine("env name: " + environmentName);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +55,7 @@ namespace web33
                     // var requestService = new RequestService(new ParallelRequest(), context);
                     try
                     {
-                        await requestService.PerformRequestAsync();
+                        await requestService.PerformRequest();
                     }
                     catch (HttpRequestException e)
                     {
@@ -82,6 +84,11 @@ namespace web33
                     await context.Response.WriteAsync(new Quote().GenerateQuote());
                 });
             });
+        }
+
+        public static string GetMachineName()
+        {
+            return System.Environment.MachineName;
         }
     }
 }

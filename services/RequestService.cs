@@ -1,7 +1,11 @@
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Storage;
+using Extentions;
 
 namespace web3
 {
@@ -16,13 +20,19 @@ namespace web3
             this.context = context;
         }
 
-        public async Task PerformRequestAsync()
+        public async Task PerformRequest()
         {
+            var requests = DataStorage.pages.Select(page => RequestTask(page));
             var stopWatch = new Stopwatch();
             stopWatch.Start();
-            var response = request.Perform().Result;
+            var response = request.Perform(requests).Result;
             stopWatch.Stop();
             await context.Response.WriteAsync($"Execution time: {stopWatch.ElapsedMilliseconds}\n{response.GetQuote()}\n{response.GetInfo()}");
+        }
+
+        private async Task<HttpResponseMessage> RequestTask(string page)
+        {
+            return await new HttpClient().GetAsync(DataStorage.urls.GetRandomElement() + page);
         }
     }
 }
