@@ -23,9 +23,6 @@ namespace web33
         public Startup(IConfiguration iconfiguration)
         {
             _iconfiguration = iconfiguration;
-            // System.Console.WriteLine("ASYNC" + _iconfiguration.GetValue<string>("mode"));
-            // System.Console.WriteLine("ASYNC2222" + _iconfiguration.GetValue<string>("hostname"));
-            GetUrls();
         }
 
 

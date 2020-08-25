@@ -14,7 +14,7 @@ namespace web3
         private IHttpRequest request;
         private IUrlSelection urlSelection;
         private HttpContext context;
-        
+
         public RequestService(IHttpRequest request, IUrlSelection urlSelection, HttpContext context)
         {
             this.request = request;
@@ -36,7 +36,6 @@ namespace web3
 
         private async Task<HttpResponseMessage> RequestTask(string url)
         {   
-            System.Console.WriteLine("URLLLLLLLLLLLLLLLLL  =====> " + url);
             return await new HttpClient().GetAsync(url);
         }
     }
