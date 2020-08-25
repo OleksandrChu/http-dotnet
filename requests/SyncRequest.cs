@@ -15,7 +15,7 @@ namespace web3
             var response = new Response();
             foreach (var task in requests)
             {
-                await response.ParseHttpResponseAsync((await task));
+                await response.ParseHttpResponseAsync(httpResponseMessage: (await task));
             }
             return response;
         }

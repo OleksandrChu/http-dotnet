@@ -23,8 +23,9 @@ namespace web33
         public Startup(IConfiguration iconfiguration)
         {
             _iconfiguration = iconfiguration;
-            System.Console.WriteLine("ASYNC" + _iconfiguration.GetValue<string>("mode"));
-            System.Console.WriteLine("ASYNC2222" + _iconfiguration.GetValue<string>("EmailServer"));
+            // System.Console.WriteLine("ASYNC" + _iconfiguration.GetValue<string>("mode"));
+            // System.Console.WriteLine("ASYNC2222" + _iconfiguration.GetValue<string>("hostname"));
+            GetUrls();
         }
 
 
@@ -59,12 +60,10 @@ namespace web33
                 });
                 endpoints.MapGet("/incamp18-quote", async context =>
                 {
-                    Response response = new Response();
-                    var requestService = new RequestService(new SyncRequest(), context);
-                    // var requestService = new RequestService(new ParallelRequest(), context);
+                    var requestService = SetRequestService(context);
                     try
                     {
-                        await requestService.PerformRequest();
+                        await requestService.PerformRequest(GetUrls());
                     }
                     catch (HttpRequestException e)
                     {
@@ -95,9 +94,21 @@ namespace web33
             });
         }
 
-        public static string GetMachineName()
+        public string[] GetUrls()
         {
-            return System.Environment.MachineName;
+            var urls = new string[_iconfiguration.GetValue<int>("SERVICES")];
+            var hostname = _iconfiguration.GetValue<string>("HOSTNAME");
+            for (int i = 0; i < urls.Length;)
+            {
+                urls[i] = $"http://{hostname}_{hostname}_{++i}";
+            }
+            return urls;
+        }
+
+        public RequestService SetRequestService(HttpContext context) {
+            return (_iconfiguration.GetValue<string>("mode") == "async") 
+                ? new RequestService(new ParallelRequest(), new RandomSelector(), context) 
+                : new RequestService(new SyncRequest(), new RandomSelector(), context);
         }
     }
 }

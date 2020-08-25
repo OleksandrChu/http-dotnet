@@ -6,11 +6,12 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment: 
-      - EmailServer=172.2.0.18
+      - HOSTNAME=http-dotnet
+      - SERVICES=5
     ports:
       - target: 80
     deploy:
-      replicas: 3
+      replicas: 5
       resources:
         limits:
           memory: 50m
