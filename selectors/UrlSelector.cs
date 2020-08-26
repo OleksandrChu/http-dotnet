@@ -1,6 +1,4 @@
-using Storage;
-
-namespace web33
+namespace web3
 {
     public class UrlSelector
     {
@@ -12,13 +10,13 @@ namespace web33
         }
 
         public string[] GenerateUrlsWithEndpoints(string[] urls) {
-            var generated = new string[DataStorage.endpoints.Length];
+            var generatedUrls = new string[NetworkConfig.endpoints.Length];
             var selectedUrls = urlSelection.Select(urls);
-            for (int i = 0; i < generated.Length; i++)
+            for (int i = 0; i < generatedUrls.Length; i++)
             {
-                generated[i] = $"{selectedUrls[i]}/{DataStorage.endpoints[i]}";
+                generatedUrls[i] = $"{selectedUrls[i]}/{NetworkConfig.endpoints[i]}";
             }
-            return generated;
+            return generatedUrls;
         }
     }
 }

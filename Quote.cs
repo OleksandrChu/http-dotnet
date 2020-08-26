@@ -1,6 +1,6 @@
 using System;
 using Extentions;
-using static Storage.DataStorage;
+using static web3.DataStorage;
 
 namespace web3
 {

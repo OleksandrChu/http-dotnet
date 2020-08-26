@@ -11,20 +11,23 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Storage;
+using web33;
 using web3;
+using Newtonsoft.Json;
 
 namespace web33
 {
     public class Startup
     {
         private readonly IConfiguration _iconfiguration;
+        private NetworkConfig networkConfig;
 
         public Startup(IConfiguration iconfiguration)
         {
             _iconfiguration = iconfiguration;
+            networkConfig = new NetworkConfig();
+            networkConfig.SetUrls(_iconfiguration.GetValue<string>("HOSTNAME"),_iconfiguration.GetValue<int>("SERVICES"));
         }
-
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -60,7 +63,7 @@ namespace web33
                     var requestService = SetRequestService(context);
                     try
                     {
-                        await requestService.PerformRequest(GetUrls());
+                        await requestService.PerformRequest(networkConfig.GetUrls());
                     }
                     catch (HttpRequestException e)
                     {
@@ -91,21 +94,10 @@ namespace web33
             });
         }
 
-        public string[] GetUrls()
-        {
-            var urls = new string[_iconfiguration.GetValue<int>("SERVICES")];
-            var hostname = _iconfiguration.GetValue<string>("HOSTNAME");
-            for (int i = 0; i < urls.Length;)
-            {
-                urls[i] = $"http://{hostname}_{hostname}_{++i}";
-            }
-            return urls;
-        }
-
         public RequestService SetRequestService(HttpContext context) {
             return (_iconfiguration.GetValue<string>("mode") == "async") 
-                ? new RequestService(new ParallelRequest(), new RandomSelector(), context) 
-                : new RequestService(new SyncRequest(), new RandomSelector(), context);
+                ? new RequestService(new ParallelRequest(), new ShuffleSelector(), context) 
+                : new RequestService(new SyncRequest(), new ShuffleSelector(), context);
         }
     }
 }

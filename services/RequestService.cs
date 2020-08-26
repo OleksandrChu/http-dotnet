@@ -1,11 +1,9 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Storage;
-using Extentions;
-using web33;
 
 namespace web3
 {
@@ -25,8 +23,8 @@ namespace web3
         public async Task PerformRequest(string[] urls)
         {
             var requests = new UrlSelector(urlSelection)
-            .GenerateUrlsWithEndpoints(urls)
-            .Select(url => RequestTask(url));
+                            .GenerateUrlsWithEndpoints(urls)
+                            .Select(url => RequestTask(url));
             var stopWatch = new Stopwatch();
             stopWatch.Start();
             var response = request.Perform(requests).Result;

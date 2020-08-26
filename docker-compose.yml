@@ -6,7 +6,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment: 
-      - HOSTNAME=http-dotnet
+      - HOSTNAME=http-dotnet_http-dotnet_
       - SERVICES=5
     ports:
       - target: 80

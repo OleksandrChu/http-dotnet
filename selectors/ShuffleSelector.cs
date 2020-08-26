@@ -1,6 +1,6 @@
 using FisherYatesShuffle;
 
-namespace web33
+namespace web3
 {
     public class ShuffleSelector : IUrlSelection
     {

@@ -4,10 +4,10 @@ namespace Extentions
 {
     public static class ArrayExtentions
     {
-        public static string GetRandomElement(this string[] words)
+        public static string GetRandomElement(this string[] elements)
         {
             Random random = new Random();
-            return words[random.Next(0, words.Length)].ToString();
+            return elements[random.Next(0, elements.Length)].ToString();
         }
 
     }

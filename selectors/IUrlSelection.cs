@@ -1,4 +1,4 @@
-namespace web33
+namespace web3
 {
     public interface IUrlSelection
     {
